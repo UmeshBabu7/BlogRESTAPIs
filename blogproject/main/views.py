@@ -14,8 +14,14 @@ def blog_home(request):
     return render(request,'blog_home.html',context)
 
 
-def blog_detail(request):
-    return render(request,'blog_detail.html')
+def blog_detail(request,slug):
+    blog=Blog.objects.get(slug=slug)
+
+    context={
+        'blog':blog
+    }
+
+    return render(request,'blog_detail.html',context)
 
 
 def profile(request):
