@@ -12,6 +12,8 @@ def signUp(request):
         messages.success(request,"Your account is created successfully")
         return redirect('home')
     else:
+        messages.error(request, "Error")
+        
         form=UserCreationForm()
     return render(request, "register.html",{'form':form})
 
