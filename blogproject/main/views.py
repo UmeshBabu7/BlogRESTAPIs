@@ -16,9 +16,11 @@ def blog_home(request):
 
 def blog_detail(request,slug):
     blog=Blog.objects.get(slug=slug)
+    all_blogs = Blog.objects.all().order_by('-post_date')[:10]
 
     context={
-        'blog':blog
+        'blog':blog,
+        'all_blogs': all_blogs
     }
 
     return render(request,'blog_detail.html',context)
