@@ -15,4 +15,8 @@ def profile(request):
     return render(request,'profile.html')
 
 
+def contactUs(request):
+    return render(request, "contact_us.html")
+
+
 
