@@ -1,12 +1,41 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detail Page</title>
-</head>
-<body>
-    <h1>Blog Detail</h1>
-</body>
-</html>
+{% extends 'base.html' %}
 
+{% block content %}
+
+<dev class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <h2>Lorem ipsum dolor sit amet consectetur adipisicing elit.</h2>
+            <span>Author: Umesh Tamang</span>
+            <div>
+                <small>A min ago</small>
+            </div>
+            <img src="https://images.pexels.com/photos/11013073/pexels-photo-11013073.jpeg?cs=srgb&dl=pexels-anil-singh-11013073.jpg&fm=jpg"
+                alt="" width="40%">
+            <div>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui necessitatibus veniam quia, tempore, cum
+                    nobis veritatis laboriosam quam dolor, neque atque. Saepe, sit? Sit impedit vero recusandae, veniam
+                    magnam molestiae quod nobis architecto officiis enim sapiente omnis nam laboriosam mollitia atque
+                    odit veritatis voluptates explicabo perferendis itaque ullam. Dolores dicta placeat deleniti
+                    quisquam optio dignissimos labore quod aspernatur commodi excepturi quidem ratione, doloribus
+                    distinctio, mollitia sequi numquam velit voluptate eius hic? Cupiditate earum repellendus
+                    exercitationem commodi eius? Corporis totam quasi cupiditate expedita modi quaerat error eligendi
+                    numquam ducimus nostrum saepe qui itaque ipsum dicta laboriosam, nulla quibusdam veritatis ea nemo
+                    excepturi cum culpa? Voluptatum laudantium culpa nihil eveniet hic minima nulla asperiores modi
+                    dolorum dignissimos? Voluptate rerum doloremque, fugiat quod ducimus quos. Ratione, dolore minima?
+                    </p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <ul class="list-group">
+                <li class="list-group-item">An item</li>
+                <li class="list-group-item">A second item</li>
+                <li class="list-group-item">A third item</li>
+                <li class="list-group-item">A fourth item</li>
+                <li class="list-group-item">And a fifth one</li>
+            </ul>
+        </div>
+    </div>
+</dev>
+
+{% endblock content %}
