@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     'main',
     'authors',
     'fontawesomefree',
+    'django.contrib.humanize',
 ]
 
 MIDDLEWARE = [
