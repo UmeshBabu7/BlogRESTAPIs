@@ -4,6 +4,9 @@ from django.contrib import messages
 from .forms import SignupForm,LoginUserForm
 from django.contrib.auth import authenticate, login,logout
 from main.models import Blog
+from django.urls import reverse_lazy
+from .forms import SignupForm, LoginUserForm, PasswordChangingForm
+from django.contrib.auth.views import PasswordChangeView
 
 # Create your views here.
 
@@ -60,3 +63,11 @@ def profile(request, user_name):
         "user_related_data": user_related_data
     }
     return render(request, "profile.html", context)
+
+
+class PasswordChangeView(PasswordChangeView):
+    form_class = PasswordChangingForm
+    success_url = reverse_lazy('password_success')
+    
+def password_success(request):
+    return render(request, "password_change_success.html")
