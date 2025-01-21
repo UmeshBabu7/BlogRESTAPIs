@@ -1,19 +1,11 @@
 from rest_framework import serializers
 from .models import Blog
 
-
-class BlogSerializer(serializers.Serializer):
-
-    id = serializers.IntegerField(read_only=True)
-    name = serializers.CharField()
-    author = serializers.StringRelatedField(read_only=True)
-    description = serializers.CharField()
-    post_date = serializers.DateTimeField()
-    is_public = serializers.BooleanField()
-    slug = serializers.CharField()
-
-    def create(self, validated_data):
-        return Blog.objects.create(**validated_data)
+class BlogSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Blog
+        # fields="__all__"
+        exclude = ['slug']
     
     
     def update(self, instance, validated_data):
