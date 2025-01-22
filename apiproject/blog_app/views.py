@@ -54,30 +54,33 @@ class BlogListGenericView(mixins.ListModelMixin, mixins.CreateModelMixin, generi
         return self.create(request, *args, **kwargs)
     
 # retrieve
-class BlogDetailGenericView(mixins.RetrieveModelMixin, generics.GenericAPIView):
+class BlogDetailGenericView(mixins.RetrieveModelMixin,mixins.UpdateModelMixin, generics.GenericAPIView):
     queryset = Blog.objects.all()
     serializer_class = BlogSerializer
 
     def get(self, request, *args, **kwargs):
         return self.retrieve(request, *args, **kwargs)
+    
+    def put(self, request, *args, **kwargs):
+        return self.update(request, *args, **kwargs)
 
     
 
-class BlogDetailView(APIView):
-    def get(self, request, pk):
-        blog=Blog.objects.get(id=id)
-        serializer=BlogSerializer(blog)
-        return Response(serializer.data,status=status.HTTP_200_OK)
+# class BlogDetailView(APIView):
+#     def get(self, request, pk):
+#         blog=Blog.objects.get(id=id)
+#         serializer=BlogSerializer(blog)
+#         return Response(serializer.data,status=status.HTTP_200_OK)
 
 
-def put(self, request, pk):
-        blog=Blog.objects.get(id=id)
-        serializer=BlogSerializer(blog,data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data,status=status.HTTP_200_OK)
-        else:
-            return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+# def put(self, request, pk):
+#         blog=Blog.objects.get(id=id)
+#         serializer=BlogSerializer(blog,data=request.data)
+#         if serializer.is_valid():
+#             serializer.save()
+#             return Response(serializer.data,status=status.HTTP_200_OK)
+#         else:
+#             return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
         
 def delete(self, request, pk):
         blog=Blog.objects.get(id=id)
