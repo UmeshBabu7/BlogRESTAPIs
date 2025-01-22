@@ -22,6 +22,19 @@ class CategoryDetailView(APIView):
         single_category = Category.objects.get(pk=pk)
         serializers = CategorySerializer(single_category, context={'request': request})
         return Response(serializers.data)
+    
+
+
+# Concrete Views
+
+class BlogCreateCon(generics.CreateAPIView):
+    queryset = Blog.objects.all()
+    serializer_class = BlogSerializer
+
+    
+class BlogListcon(generics.ListAPIView):
+    queryset = Blog.objects.all()
+    serializer_class = BlogSerializer
 
 
 # class BlogListView(APIView):
@@ -41,32 +54,32 @@ class CategoryDetailView(APIView):
 
 
 # generic views with mixins(list and post:create)
-class BlogListGenericView(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericAPIView):
-    # genericapiview
-    queryset = Blog.objects.all()
-    serializer_class = BlogSerializer
+# class BlogListGenericView(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericAPIView):
+#     # genericapiview
+#     queryset = Blog.objects.all()
+#     serializer_class = BlogSerializer
 
-    #mixins 
-    def get(self, request, *args, **kwargs):
-        return self.list(request, *args, **kwargs)
+#     #mixins 
+#     def get(self, request, *args, **kwargs):
+#         return self.list(request, *args, **kwargs)
     
-    def post(self, request, *args, **kwargs):
-        return self.create(request, *args, **kwargs)
+#     def post(self, request, *args, **kwargs):
+#         return self.create(request, *args, **kwargs)
     
 # retrieve
-class BlogDetailGenericView(mixins.RetrieveModelMixin,mixins.UpdateModelMixin,mixins.DestroyModelMixin, generics.GenericAPIView):
-    queryset = Blog.objects.all()
-    serializer_class = BlogSerializer
-    lookup_field = 'slug'
+# class BlogDetailGenericView(mixins.RetrieveModelMixin,mixins.UpdateModelMixin,mixins.DestroyModelMixin, generics.GenericAPIView):
+#     queryset = Blog.objects.all()
+#     serializer_class = BlogSerializer
+#     lookup_field = 'slug'
 
-    def get(self, request, *args, **kwargs):
-        return self.retrieve(request, *args, **kwargs)
+#     def get(self, request, *args, **kwargs):
+#         return self.retrieve(request, *args, **kwargs)
     
-    def put(self, request, *args, **kwargs):
-        return self.update(request, *args, **kwargs)
+#     def put(self, request, *args, **kwargs):
+#         return self.update(request, *args, **kwargs)
     
-    def delete(self, request, *args, **kwargs):
-        return self.destroy(request, *args, **kwargs)
+#     def delete(self, request, *args, **kwargs):
+#         return self.destroy(request, *args, **kwargs)
 
     
 

@@ -12,8 +12,15 @@ urlpatterns = [
 
     
     # Generic view with mixins
-    path("blog_list_generic_view/", views.BlogListGenericView.as_view(), name="blog_list_generic_view"),
+    # path("blog_list_generic_view/", views.BlogListGenericView.as_view(), name="blog_list_generic_view"),
+
+
     # path("blog_detail_generic_view/<int:pk>/", views.BlogDetailGenericView.as_view(), name="blog_detail_generic_view"),
-    path("blog_detail_generic_view/<str:slug>/", views.BlogDetailGenericView.as_view(), name="blog_detail_generic_view"),
+    # path("blog_detail_generic_view/<str:slug>/", views.BlogDetailGenericView.as_view(), name="blog_detail_generic_view"),
+
+
+    # Concrete  urls
+    path("blog_create_createapiview/", views.BlogCreateCon.as_view(), name="blog_create_createapiview"),
+    path("blog_list_createapiview/", views.BlogListcon.as_view(), name="blog_list_createapiview"),
     
 ]
