@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import User
 from datetime import date
 from django.template.defaultfilters import slugify
+import random
+import string
 
 # Create your models here.
 
@@ -12,6 +14,7 @@ class Category(models.Model):
         return self.category_name
 
 class Blog(models.Model):
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
     blog_title = models.CharField(max_length=100)
     blog_description = models.TextField()
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, related_name="category")
@@ -24,7 +27,8 @@ class Blog(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(self.blog_title + "-" + str(self.post_date))
+            base_slug = slugify(self.blog_title + " " + self.author.username + " " + self.category.category_name)
+            self.slug = base_slug + ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(5))
 
         return super().save(*args, **kwargs)
 
