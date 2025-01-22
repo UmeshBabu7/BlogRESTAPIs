@@ -4,8 +4,8 @@ from .models import Blog
 class BlogSerializer(serializers.ModelSerializer):
     class Meta:
         model=Blog
-        # fields="__all__"
-        exclude = ['slug']
+        fields="__all__"
+        # exclude = ['slug']
     
     
     def update(self, instance, validated_data):
