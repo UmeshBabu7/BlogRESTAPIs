@@ -43,6 +43,11 @@ class BlogRetrievecon(generics.RetrieveAPIView):
     lookup_field = 'slug'
 
 
+class BlogDestroyCon(generics.DestroyAPIView):
+    queryset = Blog.objects.all()
+    serializer_class = BlogSerializer
+
+
 # class BlogListView(APIView):
 #     def get(self, request):
 #         all_blogs=Blog.objects.filter(is_public=True)
