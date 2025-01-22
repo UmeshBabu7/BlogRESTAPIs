@@ -54,7 +54,7 @@ class BlogListGenericView(mixins.ListModelMixin, mixins.CreateModelMixin, generi
         return self.create(request, *args, **kwargs)
     
 # retrieve
-class BlogDetailGenericView(mixins.RetrieveModelMixin,mixins.UpdateModelMixin, generics.GenericAPIView):
+class BlogDetailGenericView(mixins.RetrieveModelMixin,mixins.UpdateModelMixin,mixins.DestroyModelMixin, generics.GenericAPIView):
     queryset = Blog.objects.all()
     serializer_class = BlogSerializer
 
@@ -63,6 +63,9 @@ class BlogDetailGenericView(mixins.RetrieveModelMixin,mixins.UpdateModelMixin, g
     
     def put(self, request, *args, **kwargs):
         return self.update(request, *args, **kwargs)
+    
+    def delete(self, request, *args, **kwargs):
+        return self.destroy(request, *args, **kwargs)
 
     
 
@@ -82,10 +85,10 @@ class BlogDetailGenericView(mixins.RetrieveModelMixin,mixins.UpdateModelMixin, g
 #         else:
 #             return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
         
-def delete(self, request, pk):
-        blog=Blog.objects.get(id=id)
-        blog.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+# def delete(self, request, pk):
+#         blog=Blog.objects.get(id=id)
+#         blog.delete()
+#         return Response(status=status.HTTP_204_NO_CONTENT)
         
     
     
