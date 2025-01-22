@@ -13,6 +13,7 @@ urlpatterns = [
     
     # Generic view with mixins
     path("blog_list_generic_view/", views.BlogListGenericView.as_view(), name="blog_list_generic_view"),
-    path("blog_detail_generic_view/<int:pk>/", views.BlogDetailGenericView.as_view(), name="blog_detail_generic_view"),
+    # path("blog_detail_generic_view/<int:pk>/", views.BlogDetailGenericView.as_view(), name="blog_detail_generic_view"),
+    path("blog_detail_generic_view/<str:slug>/", views.BlogDetailGenericView.as_view(), name="blog_detail_generic_view"),
     
 ]
