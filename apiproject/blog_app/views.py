@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import JsonResponse
-from .models import Blog
-from .serializers import BlogSerializer
+from .models import Blog,Category
+from .serializers import BlogSerializer,CategorySerializer
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
@@ -9,7 +9,18 @@ from rest_framework.views import APIView
 
 # Create your views here.
 
-
+class CategoryListView(APIView):
+    def get(self, request):
+        all_category = Category.objects.all()
+        serializers = CategorySerializer(all_category, many=True)
+        return Response(serializers.data)
+    
+    
+class CategoryDetailView(APIView):
+    def get(self, request, pk):
+        single_category = Category.objects.get(pk=pk)
+        serializers = CategorySerializer(single_category)
+        return Response(serializers.data)
 
 
 class BlogListView(APIView):
