@@ -39,8 +39,8 @@ class CategoryDetailView(APIView):
 #         else:
 #             return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
 
-# generic views with mixins
 
+# generic views with mixins(list and post:create)
 class BlogListGenericView(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericAPIView):
     # genericapiview
     queryset = Blog.objects.all()
@@ -52,6 +52,14 @@ class BlogListGenericView(mixins.ListModelMixin, mixins.CreateModelMixin, generi
     
     def post(self, request, *args, **kwargs):
         return self.create(request, *args, **kwargs)
+    
+# retrieve
+class BlogDetailGenericView(mixins.RetrieveModelMixin, generics.GenericAPIView):
+    queryset = Blog.objects.all()
+    serializer_class = BlogSerializer
+
+    def get(self, request, *args, **kwargs):
+        return self.retrieve(request, *args, **kwargs)
 
     
 
