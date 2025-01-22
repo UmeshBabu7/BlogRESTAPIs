@@ -48,6 +48,16 @@ class BlogDestroyCon(generics.DestroyAPIView):
     serializer_class = BlogSerializer
 
 
+class BlogUpdateCon(generics.UpdateAPIView):
+    queryset = Blog.objects.all()
+    serializer_class = BlogSerializer
+
+
+class BlogretrieveUpdateCon(generics.RetrieveUpdateAPIView):
+    queryset = Blog.objects.all()
+    serializer_class = BlogSerializer
+
+
 # class BlogListView(APIView):
 #     def get(self, request):
 #         all_blogs=Blog.objects.filter(is_public=True)
