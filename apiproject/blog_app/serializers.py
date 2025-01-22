@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from .models import Blog
 
-def name_valid(value):
+def blog_title_valid(value):
     if len(value) < 4:
         raise serializers.ValidationError("Blog title is very short")
     else:
@@ -10,9 +10,8 @@ def name_valid(value):
 
 class BlogSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(read_only=True)
-    name = serializers.CharField()
-    name = serializers.CharField(validators = [name_valid])
-    description = serializers.CharField()
+    blog_title = serializers.CharField(validators = [blog_title_valid])
+    blog_description = serializers.CharField()
     post_date = serializers.DateTimeField(required=False)
     is_public = serializers.BooleanField()
     slug = serializers.CharField(required=False)
@@ -25,8 +24,8 @@ class BlogSerializer(serializers.ModelSerializer):
         # exclude = ['slug']
 
     def validate(self, data):
-        if data['name'] == data['description']:
-            raise serializers.ValidationError("Blog title and description can not be same")
+        if data['blog_title'] == data['blog_description']:
+            raise serializers.ValidationError("Blog title and Blog_description can not be same")
         else:
             return data
     
