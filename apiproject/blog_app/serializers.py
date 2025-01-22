@@ -9,25 +9,29 @@ def blog_title_valid(value):
 
 
 class BlogSerializer(serializers.ModelSerializer):
-    id = serializers.IntegerField(read_only=True)
-    blog_title = serializers.CharField(validators = [blog_title_valid])
-    blog_description = serializers.CharField()
-    post_date = serializers.DateTimeField(required=False)
-    is_public = serializers.BooleanField()
-    slug = serializers.CharField(required=False)
+    len_blog_title = serializers.SerializerMethodField()
+    # id = serializers.IntegerField(read_only=True)
+    # blog_title = serializers.CharField(validators = [blog_title_valid])
+    # blog_description = serializers.CharField()
+    # post_date = serializers.DateTimeField(required=False)
+    # is_public = serializers.BooleanField()
+    # slug = serializers.CharField(required=False)
 
     class Meta:
         model = Blog
         fields = "__all__"
 
+    def get_len_blog_title(self, object):
+        return len(object.blog_title)
+
         # fields = ['name', 'description', 'is_public', 'slug']
         # exclude = ['slug']
 
-    def validate(self, data):
-        if data['blog_title'] == data['blog_description']:
-            raise serializers.ValidationError("Blog title and Blog_description can not be same")
-        else:
-            return data
+    # def validate(self, data):
+    #     if data['blog_title'] == data['blog_description']:
+    #         raise serializers.ValidationError("Blog title and Blog_description can not be same")
+    #     else:
+    #         return data
     
     
     def update(self, instance, validated_data):
