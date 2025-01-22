@@ -6,6 +6,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
 from rest_framework.views import APIView
+from rest_framework import mixins, generics
 
 # Create your views here.
 
@@ -23,20 +24,34 @@ class CategoryDetailView(APIView):
         return Response(serializers.data)
 
 
-class BlogListView(APIView):
-    def get(self, request):
-        all_blogs=Blog.objects.filter(is_public=True)
-        serializer=BlogSerializer(all_blogs,many=True)
-        return Response(serializer.data,status=status.HTTP_200_OK)
+# class BlogListView(APIView):
+#     def get(self, request):
+#         all_blogs=Blog.objects.filter(is_public=True)
+#         serializer=BlogSerializer(all_blogs,many=True)
+#         return Response(serializer.data,status=status.HTTP_200_OK)
     
 
-def post(self, request):
-        serializer=BlogSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data,status=status.HTTP_201_CREATED)
-        else:
-            return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+# def post(self, request):
+#         serializer=BlogSerializer(data=request.data)
+#         if serializer.is_valid():
+#             serializer.save()
+#             return Response(serializer.data,status=status.HTTP_201_CREATED)
+#         else:
+#             return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+
+# generic views with mixins
+
+class BlogListGenericView(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericAPIView):
+    # genericapiview
+    queryset = Blog.objects.all()
+    serializer_class = BlogSerializer
+
+    #mixins 
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
+    
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
 
     
 
@@ -55,9 +70,7 @@ def put(self, request, pk):
             return Response(serializer.data,status=status.HTTP_200_OK)
         else:
             return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
-
-
-
+        
 def delete(self, request, pk):
         blog=Blog.objects.get(id=id)
         blog.delete()
