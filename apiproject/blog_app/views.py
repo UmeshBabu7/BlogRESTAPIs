@@ -10,6 +10,8 @@ from rest_framework import mixins, generics
 from django.shortcuts import get_object_or_404
 from rest_framework import serializers
 from rest_framework.permissions import IsAuthenticated, IsAdminUser, IsAuthenticatedOrReadOnly
+from .permissions import IsAdminOrReadOnly, IsOwnerOrReadonly
+
 
 # Create your views here.
 
@@ -25,7 +27,12 @@ class CategoryListeCreateView(generics.ListCreateAPIView):
     # permission_classes = [IsAdminUser] 
     
     # should be logged to edit the details or you will have permission to view the data
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    # permission_classes = [IsAuthenticatedOrReadOnly]
+
+    # CUSTOM PERMISSION: is user is admin the he will have permission to perform CRUD operartions and other user will have read only permission
+    permission_classes = [IsAdminOrReadOnly]
+
+
     
     def list(self, request, *args, **kwargs):
         queryset = self.get_queryset()
@@ -41,6 +48,7 @@ class CategorydetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
     liikup_field = 'id' # slug
+    permission_classes = [IsOwnerOrReadonly]
     
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()
@@ -55,6 +63,7 @@ class CategorydetailView(generics.RetrieveUpdateDestroyAPIView):
 class BlogListCreateView(generics.ListCreateAPIView):
     queryset = Blog.objects.filter(is_public = True)
     serializer_class = BlogSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
 
     def list(self, request, *args, **kwargs):
         queryset = self.get_queryset()
@@ -93,6 +102,7 @@ class BlogDetailView(generics.RetrieveUpdateDestroyAPIView):
 class BlogCommentListCreateView(generics.ListCreateAPIView):
     queryset = BlogComment.objects.all()
     serializer_class = BlogCommentSerializer
+    permission_classes = [IsAuthenticated]
     
     def get_queryset(self):
         blog_id = self.kwargs.get('blog_id')
@@ -105,6 +115,31 @@ class BlogCommentListCreateView(generics.ListCreateAPIView):
             raise serializers.ValidationError({'Message': 'You have already added comment on this blog'})
         serializer.save(author=self.request.user, blog=blog)
 
+class BlogCommentDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = BlogComment.objects.all()
+    serializer_class = BlogCommentSerializer
+    permission_classes = [IsOwnerOrReadonly]
+    
+    def get_object(self):
+        comment_id = self.kwargs.get('comment_id')
+        comment = get_object_or_404(BlogComment, id = comment_id)
+        
+        blog_id = self.kwargs.get("blog_id")
+        if comment.blog.id != blog_id:
+            raise serializers.ValidationError({"Message": "This comment is not related to the requested blog"}, status=status.HTTP_401_UNAUTHORIZED)
+        return comment
+    
+    def delete(self, request, *args, **kwargs):
+        comment = self.get_object()
+        if comment.author != request.user:
+            raise serializers.ValidationError({"Message": "You are not authorized to perform this action"}, status=status.HTTP_401_UNAUTHORIZED)
+        return super().delete(request, *args, **kwargs)
+    def put(self, request, *args, **kwargs):
+        comment = self.get_object()
+        
+        if comment.author != request.user:
+            raise serializers.ValidationError({"Message": "You are not authorized to perform this action"}, status=status.HTTP_401_UNAUTHORIZED)
+        return super().put(request, *args, **kwargs)
 
 # Concrete Views
 # class BlogCreateCon(generics.CreateAPIView):

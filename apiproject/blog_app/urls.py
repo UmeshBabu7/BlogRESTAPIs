@@ -31,12 +31,13 @@ urlpatterns = [
     # path("blog_rud/<int:pk>/", views.BlogRUDApiView.as_view(), name="blog_rud"),
 
 
-# create blog lists and detail view created
+# create blog lists,create and retrieve,update and delete view created
     path("blog_list/", views.BlogListCreateView.as_view(), name="blog_list"),
     path("blog_detail/<int:pk>/", views.BlogDetailView.as_view(), name="blog_list"),
 
 # blogs comment
-    path("blog_comment_list/<int:blog_id>/", views.BlogCommentListCreateView.as_view(), name="blog_comment_list"),
+    path("blog_comment_list/blog/<int:blog_id>/", views.BlogCommentListCreateView.as_view(), name="blog_comment_list"),
+    path("blog_comment_detail/blog/<int:blog_id>/comment/<int:comment_id>/", views.BlogCommentDetailView.as_view(), name="blog_comment_detail"),
 
     
     
