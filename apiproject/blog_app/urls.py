@@ -7,8 +7,8 @@ urlpatterns = [
     # path('class_blog_detail/<int:pk>/', views.BlogDetailView.as_view(), name="blog_detail"),
 
     # Category URLS
-    path("category_list/", views.CategoryListView.as_view(), name="category_list"),
-    path("category_detail/<int:pk>/", views.CategoryDetailView.as_view(), name="category_detail"),
+    path("category_list/", views.CategoryListeCreateView.as_view(), name="category_list"),
+    path("category_detail/<int:pk>/", views.CategorydetailView.as_view(), name="category_detail"),
 
     
     # Generic view with mixins

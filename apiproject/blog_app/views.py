@@ -10,18 +10,31 @@ from rest_framework import mixins, generics
 
 # Create your views here.
 
-class CategoryListView(APIView):
-    def get(self, request):
-        all_category = Category.objects.all()
-        serializers = CategorySerializer(all_category, many=True, context={'request': request})
-        return Response(serializers.data)
+class CategoryListeCreateView(generics.ListCreateAPIView):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
     
-
-class CategoryDetailView(APIView):
-    def get(self, request, pk):
-        single_category = Category.objects.get(pk=pk)
-        serializers = CategorySerializer(single_category, context={'request': request})
-        return Response(serializers.data)
+    def list(self, request, *args, **kwargs):
+        queryset = self.get_queryset()
+        serializer = CategorySerializer(queryset, many=True, context={'request': request})
+        if queryset.exists():
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        else:
+            return Response({'Message': 'No category found'}, status=status.HTTP_404_NOT_FOUND)
+        
+        
+class CategorydetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+    liikup_field = 'id' # slug
+    
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance)
+        if instance:
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        else:
+            return Response({'Message': 'No blog Found'}, status=status.HTTP_404_NOT_FOUND)
     
 
 

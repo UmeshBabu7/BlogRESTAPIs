@@ -18,11 +18,12 @@ class BlogSerializer(serializers.ModelSerializer):
         return len(object.blog_title)
     
 class CategorySerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField(read_only=True)
     category_name = serializers.CharField()
     category = BlogSerializer(many=True, read_only=True)
     class Meta:
         model = Category
-        exclude = ['id',]
+        fields = "__all__"
 
     
     def update(self, instance, validated_data):
