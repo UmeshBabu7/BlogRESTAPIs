@@ -20,14 +20,21 @@ urlpatterns = [
 
 
     # Concrete  urls
-    path("blog_create_createapiview/", views.BlogCreateCon.as_view(), name="blog_create_createapiview"),
-    path("blog_list_createapiview/", views.BlogListcon.as_view(), name="blog_list_createapiview"),
-    path("blog_retrieve_retrievepiview/<str:slug>/", views.BlogRetrievecon.as_view(), name="blog_retrieve_retrieveapiview"),
-    path("blog_destroypiview/<int:pk>/", views.BlogDestroyCon.as_view(), name="blog_destroy_destroyapiview"),
-    path("blog_updateapiview/<int:pk>/", views.BlogUpdateCon.as_view(), name="blog_update_updateapiview"),
-    path("blog_retrieveUpdateapiview/<int:pk>/", views.BlogretrieveUpdateCon.as_view(), name="blog_retrieveUpdate_retrieveUpdateapiview"),
-    path("blog_retrieveDestroyapiview/<int:pk>/", views.BlogRetrieveDestroyCon.as_view(), name="blog_retrieveDestroy_retrieveDestroyapiview"),
-    path("blog_listcreate_listcreateapiview/", views.BlogListCreateApiView.as_view(), name="blog_listcreate_listcreateapiview"),
-    path("blog_rud/<int:pk>/", views.BlogRUDApiView.as_view(), name="blog_rud"),
+    # path("blog_create_createapiview/", views.BlogCreateCon.as_view(), name="blog_create_createapiview"),
+    # path("blog_list_createapiview/", views.BlogListcon.as_view(), name="blog_list_createapiview"),
+    # path("blog_retrieve_retrievepiview/<str:slug>/", views.BlogRetrievecon.as_view(), name="blog_retrieve_retrieveapiview"),
+    # path("blog_destroypiview/<int:pk>/", views.BlogDestroyCon.as_view(), name="blog_destroy_destroyapiview"),
+    # path("blog_updateapiview/<int:pk>/", views.BlogUpdateCon.as_view(), name="blog_update_updateapiview"),
+    # path("blog_retrieveUpdateapiview/<int:pk>/", views.BlogretrieveUpdateCon.as_view(), name="blog_retrieveUpdate_retrieveUpdateapiview"),
+    # path("blog_retrieveDestroyapiview/<int:pk>/", views.BlogRetrieveDestroyCon.as_view(), name="blog_retrieveDestroy_retrieveDestroyapiview"),
+    # path("blog_listcreate_listcreateapiview/", views.BlogListCreateApiView.as_view(), name="blog_listcreate_listcreateapiview"),
+    # path("blog_rud/<int:pk>/", views.BlogRUDApiView.as_view(), name="blog_rud"),
+
+
+# create blog lists and detail view created
+    path("blog_list/", views.BlogListCreateView.as_view(), name="blog_list"),
+    path("blog_detail/<int:pk>/", views.BlogDetailView.as_view(), name="blog_list"),
+
+    
     
 ]

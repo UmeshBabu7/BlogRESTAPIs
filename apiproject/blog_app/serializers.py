@@ -9,6 +9,7 @@ def blog_title_valid(value):
 
 
 class BlogSerializer(serializers.ModelSerializer):
+    author = serializers.StringRelatedField(read_only=True)
     class Meta:
         model = Blog
         fields = "__all__"
