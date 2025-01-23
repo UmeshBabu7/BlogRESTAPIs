@@ -35,6 +35,9 @@ urlpatterns = [
     path("blog_list/", views.BlogListCreateView.as_view(), name="blog_list"),
     path("blog_detail/<int:pk>/", views.BlogDetailView.as_view(), name="blog_list"),
 
+# blogs comment
+    path("blog_comment_list/<int:blog_id>/", views.BlogCommentListCreateView.as_view(), name="blog_comment_list"),
+
     
     
 ]
