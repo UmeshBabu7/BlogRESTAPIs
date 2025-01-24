@@ -9,12 +9,13 @@ from rest_framework.views import APIView
 from rest_framework import mixins, generics
 from django.shortcuts import get_object_or_404
 from rest_framework import serializers
-from rest_framework.permissions import IsAuthenticated, IsAdminUser, IsAuthenticatedOrReadOnly
+from rest_framework.permissions import IsAuthenticated
 from .permissions import IsAdminOrReadOnly, IsOwnerOrReadonly
 from rest_framework.throttling import UserRateThrottle, AnonRateThrottle, ScopedRateThrottle
 from .throttle import BlogListCreateViewThrottle
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters
+from .pagination import BlogListCreatePagination
 
 
 # Create your views here.
@@ -23,7 +24,7 @@ from rest_framework import filters
 class CategoryListeCreateView(generics.ListCreateAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [IsAuthenticated]
 
     # UserRate & AnonRate Throttle
     # throttle_classes = [UserRateThrottle, AnonRateThrottle]
@@ -92,6 +93,8 @@ class BlogListCreateView(generics.ListCreateAPIView):
     filterset_fields = ['category__category_name', 'is_public']
     search_fields = ['blog_title', 'blog_description', 'category__category_name']
     ordering_fields = ['Post date', 'category__category_name']
+    # pagination
+    pagination_class = BlogListCreatePagination
     
 
 # blog(retrieve,update,delete)
