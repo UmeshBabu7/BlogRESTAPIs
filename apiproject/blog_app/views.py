@@ -11,6 +11,7 @@ from django.shortcuts import get_object_or_404
 from rest_framework import serializers
 from rest_framework.permissions import IsAuthenticated, IsAdminUser, IsAuthenticatedOrReadOnly
 from .permissions import IsAdminOrReadOnly, IsOwnerOrReadonly
+from rest_framework.throttling import UserRateThrottle, AnonRateThrottle
 
 
 # Create your views here.
@@ -30,7 +31,8 @@ class CategoryListeCreateView(generics.ListCreateAPIView):
     # permission_classes = [IsAuthenticatedOrReadOnly]
 
     # CUSTOM PERMISSION: is user is admin the he will have permission to perform CRUD operartions and other user will have read only permission
-    permission_classes = [IsAdminOrReadOnly]
+    permission_classes = [IsAuthenticatedOrReadOnly]
+    throttle_classes = [UserRateThrottle, AnonRateThrottle]
 
 
     
