@@ -11,7 +11,8 @@ from django.shortcuts import get_object_or_404
 from rest_framework import serializers
 from rest_framework.permissions import IsAuthenticated, IsAdminUser, IsAuthenticatedOrReadOnly
 from .permissions import IsAdminOrReadOnly, IsOwnerOrReadonly
-from rest_framework.throttling import UserRateThrottle, AnonRateThrottle
+from rest_framework.throttling import UserRateThrottle, AnonRateThrottle, ScopedRateThrottle
+from .throttle import BlogListCreateViewThrottle
 
 
 # Create your views here.
@@ -20,19 +21,17 @@ from rest_framework.throttling import UserRateThrottle, AnonRateThrottle
 class CategoryListeCreateView(generics.ListCreateAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
-
-    # should be logged in to access this view
-    # permission_classes = [IsAuthenticated] 
-    
-    # should be logged in and admin user
-    # permission_classes = [IsAdminUser] 
-    
-    # should be logged to edit the details or you will have permission to view the data
-    # permission_classes = [IsAuthenticatedOrReadOnly]
-
-    # CUSTOM PERMISSION: is user is admin the he will have permission to perform CRUD operartions and other user will have read only permission
     permission_classes = [IsAuthenticatedOrReadOnly]
-    throttle_classes = [UserRateThrottle, AnonRateThrottle]
+
+    # UserRate & AnonRate Throttle
+    # throttle_classes = [UserRateThrottle, AnonRateThrottle]
+    
+    # ScopeRateThrottle
+    # throttle_classes = [ScopedRateThrottle]
+    # throttle_scope = 'blog-list'
+    # Custom Throttle
+    throttle_classes = [BlogListCreateViewThrottle]
+    
 
 
     
