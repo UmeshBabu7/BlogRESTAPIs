@@ -30,7 +30,8 @@ INSTALLED_APPS = [
 
     'rest_framework',
     'account',
-    'blog_app'
+    'blog_app',
+    'rest_framework.authtoken',
 ]
 
 MIDDLEWARE = [
@@ -132,7 +133,8 @@ REST_FRAMEWORK = {
     #     'rest_framework.permissions.IsAuthenticated',
     # ],
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.BasicAuthentication',
+        # 'rest_framework.authentication.BasicAuthentication',
+         'rest_framework.authentication.TokenAuthentication',
     ]
 }
 
