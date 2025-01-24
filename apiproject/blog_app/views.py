@@ -14,6 +14,7 @@ from .permissions import IsAdminOrReadOnly, IsOwnerOrReadonly
 from rest_framework.throttling import UserRateThrottle, AnonRateThrottle, ScopedRateThrottle
 from .throttle import BlogListCreateViewThrottle
 from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import filters
 
 
 # Create your views here.
@@ -87,8 +88,9 @@ class BlogListCreateView(generics.ListCreateAPIView):
      # throttle_classes = [BlogListCreateViewThrottle]
     
     # Filtering
-    filter_backends = [DjangoFilterBackend]
+    filter_backends = [DjangoFilterBackend,filters.SearchFilter]
     filterset_fields = ['category__category_name', 'is_public']
+    search_fields = ['blog_title', 'blog_description', 'category__category_name']
     
 
 # blog(retrieve,update,delete)
