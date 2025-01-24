@@ -21,6 +21,7 @@ def blog_title_valid(value):
 class BlogSerializer(serializers.ModelSerializer):
     comments = serializers.SerializerMethodField()
     author = serializers.StringRelatedField(read_only=True)
+    category = serializers.CharField()
     class Meta:
         model = Blog
         fields = "__all__"

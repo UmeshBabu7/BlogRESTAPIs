@@ -13,6 +13,7 @@ from rest_framework.permissions import IsAuthenticated, IsAdminUser, IsAuthentic
 from .permissions import IsAdminOrReadOnly, IsOwnerOrReadonly
 from rest_framework.throttling import UserRateThrottle, AnonRateThrottle, ScopedRateThrottle
 from .throttle import BlogListCreateViewThrottle
+from django_filters.rest_framework import DjangoFilterBackend
 
 
 # Create your views here.
@@ -62,9 +63,9 @@ class CategorydetailView(generics.RetrieveUpdateDestroyAPIView):
 
 # blog(list,create)
 class BlogListCreateView(generics.ListCreateAPIView):
-    queryset = Blog.objects.filter(is_public = True)
+    queryset = Blog.objects.all()
     serializer_class = BlogSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    # permission_classes = [IsAuthenticatedOrReadOnly]
 
     def list(self, request, *args, **kwargs):
         queryset = self.get_queryset()
@@ -82,6 +83,12 @@ class BlogListCreateView(generics.ListCreateAPIView):
         serializer.save(author=self.request.user)
         headers = self.get_success_headers(serializer.data)
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+    
+     # throttle_classes = [BlogListCreateViewThrottle]
+    
+    # Filtering
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['category__category_name', 'is_public']
     
 
 # blog(retrieve,update,delete)
